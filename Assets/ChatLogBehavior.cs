@@ -8,9 +8,13 @@ public class ChatLogBehavior : MonoBehaviour {
 	public int maxLines = 10;
 	int numLines = 0;
 
-	void Start () {
+	void Awake() {
 		textUI = GetComponent<Text>();
+	}
+
+	void OnEnable () {
 		textUI.text = "";
+		numLines = 0;
 	}
 	
 	public void OnReceiveMessage(string s) {
@@ -18,10 +22,11 @@ public class ChatLogBehavior : MonoBehaviour {
 		
 		numLines++;
 		if (numLines > maxLines) {
-			// remove previous lines
+			// remove older lines lines
 			string t = textUI.text;
 			t = t.Substring(t.IndexOf('\n') + 1);
 			textUI.text = t;
+			numLines--;
 		}
 	}
 }
